@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pill_alert/src/core/app_constants.dart/app_colors.dart';
+import 'package:pill_alert/src/core/app_constants.dart/app_constants.dart';
 import 'package:pill_alert/src/core/app_constants.dart/app_images.dart';
 import 'package:pill_alert/src/core/models/medicine_model.dart';
+import 'package:pill_alert/src/features/search/presentation/ui/search_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -16,7 +18,8 @@ class HomeScreen extends StatelessWidget {
               width: double.infinity,
               height: double.infinity),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
+            padding: const EdgeInsets.symmetric(
+                horizontal: AppConstants.horizontalPadding),
             child: Column(
               children: [
                 const SizedBox(height: 64),
@@ -35,12 +38,16 @@ class HomeScreen extends StatelessWidget {
                   child: Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(32),
+                        borderRadius:
+                            BorderRadius.circular(AppConstants.borderRadius),
                       ),
                       child: ListView.separated(
+                          padding: const EdgeInsets.only(top: 12),
                           itemBuilder: (context, index) {
                             final medicine = medicines[index];
-                            return MedicineTile(medicine: medicine);
+                            return MedicineTile(
+                                medicine: medicine,
+                                backgroundColor: Colors.transparent);
                           },
                           separatorBuilder: (context, index) => const Divider(
                                 height: 30,
@@ -56,7 +63,12 @@ class HomeScreen extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SearchScreen()));
+                  },
                   child: const Icon(Icons.add, size: 30, color: Colors.white),
                 ),
                 const SizedBox(height: 32),
@@ -70,8 +82,10 @@ class HomeScreen extends StatelessWidget {
 }
 
 class MedicineTile extends StatelessWidget {
+  final Color? backgroundColor;
   const MedicineTile({
     super.key,
+    this.backgroundColor = Colors.white,
     required this.medicine,
   });
 
@@ -80,7 +94,11 @@ class MedicineTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(AppConstants.borderRadius),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -112,14 +130,15 @@ class MedicineTile extends StatelessWidget {
                       color: AppColors.primaryText,
                       fontWeight: FontWeight.w600),
                 ),
-                const Text(
-                  "Diabetic Drug",
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.primaryText,
+                if (medicine.similars.isNotEmpty)
+                  Text(
+                    medicine.similars.toString(),
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.primaryText,
+                    ),
                   ),
-                ),
                 const Text(
                   "10:00 AM - 6:30 PM",
                   style: TextStyle(
