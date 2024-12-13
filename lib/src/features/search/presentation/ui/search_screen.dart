@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pill_alert/src/core/app_constants.dart/app_constants.dart';
 import 'package:pill_alert/src/core/app_constants.dart/app_images.dart';
 import 'package:pill_alert/src/core/models/medicine_model.dart';
+import 'package:pill_alert/src/core/widgets/medicine_tile.dart';
 import 'package:pill_alert/src/features/home/presentation/ui/home_screen.dart';
 
 class SearchScreen extends StatefulWidget {

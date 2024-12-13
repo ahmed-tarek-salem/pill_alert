@@ -49,7 +49,7 @@ final List<MedicineModel> medicines = [
     id: 1,
     name: "Atacand 16mg",
     image: AppImages.medicine0,
-    similars: ["albustix 16mg", "candalkan16mg"],
+    similars: ["Albustix 16mg", "Candalkan16mg"],
     dose: "One tablet every 24 hours with or without food.",
     sideEffects:
         "1. Headache, Low blood pressure which may make you feel dizzy.\n"
