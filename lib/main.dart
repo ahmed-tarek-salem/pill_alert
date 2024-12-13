@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pill_alert/src/core/app_constants.dart/app_colors.dart';
 import 'package:pill_alert/src/features/home/presentation/ui/home_screen.dart';
 
 void main() {
@@ -12,7 +13,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Pill Alert',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
+        scaffoldBackgroundColor: AppColors.surface,
         useMaterial3: true,
       ),
       home: const HomeScreen(),
