@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
         scaffoldBackgroundColor: AppColors.surface,
-        timePickerTheme: TimePickerThemeData(
+        timePickerTheme: const TimePickerThemeData(
             dayPeriodColor: AppColors.secondary,
             dayPeriodTextStyle: TextStyle(color: Colors.white)),
         filledButtonTheme: FilledButtonThemeData(
