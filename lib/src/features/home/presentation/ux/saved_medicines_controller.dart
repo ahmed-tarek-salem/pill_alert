@@ -8,7 +8,7 @@ class SavedMedicinesController extends ChangeNotifier {
 
   fetchSavedMedicines() {
     localStorage.storedMedicines.keys.forEach((key) {
-      final times = LocalStorage().getMedicineSchedule(key);
+      final times = LocalStorage().getMedicineTimes(key);
       if (times != null) {
         medicineTimes[key] = times;
       }
@@ -28,6 +28,10 @@ class SavedMedicinesController extends ChangeNotifier {
 
   void removeMedicineTime(int medicineId, TimeOfDay time) {
     medicineTimes[medicineId]?.remove(time);
+    if (medicineTimes[medicineId]?.isEmpty == true) {
+      medicineTimes.remove(medicineId);
+    }
+    localStorage.deleteMedicineTime(medicineId, time);
     notifyListeners();
   }
 

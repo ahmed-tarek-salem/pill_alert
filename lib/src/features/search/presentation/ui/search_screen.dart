@@ -81,7 +81,8 @@ class _SearchScreenState extends State<SearchScreen> {
                               padding: const EdgeInsets.only(top: 18),
                               itemBuilder: (context, index) {
                                 final medicine = searchList[index];
-                                return MedicineTile(medicine: medicine);
+                                return MedicineTile(
+                                    medicine: medicine, times: const []);
                               },
                               separatorBuilder: (context, index) =>
                                   const SizedBox(height: 30),

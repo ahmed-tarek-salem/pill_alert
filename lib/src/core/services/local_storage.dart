@@ -30,7 +30,7 @@ class LocalStorage {
     await storedMedicines.put(id, times);
   }
 
-  List<TimeOfDay>? getMedicineSchedule(int id) {
+  List<TimeOfDay>? getMedicineTimes(int id) {
     var retrievedList = storedMedicines.get(id); // Get as dynamic
     print(retrievedList);
     if (retrievedList is List) {
@@ -39,8 +39,19 @@ class LocalStorage {
     return null;
   }
 
-  Future<void> deleteMedicineSchedule(int id) async {
+  Future<void> deleteMedicine(int id) async {
     await storedMedicines.delete(id);
+  }
+
+  Future<void> deleteMedicineTime(int id, TimeOfDay time) async {
+    var retrievedList = storedMedicines.get(id); // Get as dynamic
+    print(retrievedList);
+    if (retrievedList is List) {
+      retrievedList.remove(time);
+      print(retrievedList);
+      await storedMedicines.put(id, retrievedList);
+      if (retrievedList.isEmpty) await deleteMedicine(id);
+    }
   }
 }
 

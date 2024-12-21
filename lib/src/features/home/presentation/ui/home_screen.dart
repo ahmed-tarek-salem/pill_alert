@@ -66,31 +66,64 @@ class _HomeScreenState extends State<HomeScreen> {
                               borderRadius: BorderRadius.circular(
                                   AppConstants.borderRadius),
                             ),
-                            child: ListView.separated(
-                                padding: const EdgeInsets.only(top: 12),
-                                itemBuilder: (context, index) {
-                                  int medicineId = savedMedicinesController
-                                      .medicineTimes.keys
-                                      .toList()[index];
-                                  final medicine = medicines
-                                      .firstWhere((e) => e.id == medicineId);
+                            child: Column(
+                              children: [
+                                const SizedBox(height: 16),
+                                const Text(
+                                  "Your Medicines",
+                                  style: TextStyle(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColors.primary,
+                                  ),
+                                ),
+                                Expanded(
+                                  child: savedMedicinesController
+                                          .medicineTimes.isEmpty
+                                      ? const Center(
+                                          child: Text("No Selected Medicines",
+                                              style: TextStyle(
+                                                fontSize: 22,
+                                                fontWeight: FontWeight.w300,
+                                                color: AppColors.primary,
+                                              )),
+                                        )
+                                      : ListView.separated(
+                                          padding:
+                                              const EdgeInsets.only(top: 8),
+                                          itemBuilder: (context, index) {
+                                            int medicineId =
+                                                savedMedicinesController
+                                                    .medicineTimes.keys
+                                                    .toList()[index];
+                                            final medicine =
+                                                medicines.firstWhere(
+                                                    (e) => e.id == medicineId);
 
-                                  return MedicineTile(
-                                      medicine: medicine,
-                                      backgroundColor: Colors.transparent);
-                                },
-                                separatorBuilder: (context, index) =>
-                                    const Divider(
-                                      height: 30,
-                                      color: AppColors.primary,
-                                      thickness: 0.5,
-                                      indent: 45,
-                                      endIndent: 45,
-                                    ),
-                                itemCount: savedMedicinesController
-                                    .medicineTimes.keys
-                                    .toList()
-                                    .length));
+                                            return MedicineTile(
+                                                medicine: medicine,
+                                                times: savedMedicinesController
+                                                            .medicineTimes[
+                                                        medicineId] ??
+                                                    [],
+                                                backgroundColor:
+                                                    Colors.transparent);
+                                          },
+                                          separatorBuilder: (context, index) =>
+                                              const Divider(
+                                                height: 30,
+                                                color: AppColors.primary,
+                                                thickness: 0.5,
+                                                indent: 45,
+                                                endIndent: 45,
+                                              ),
+                                          itemCount: savedMedicinesController
+                                              .medicineTimes.keys
+                                              .toList()
+                                              .length),
+                                ),
+                              ],
+                            ));
                       }),
                 ),
                 const SizedBox(height: 32),

@@ -10,9 +10,22 @@ class MedicineTile extends StatelessWidget {
     super.key,
     this.backgroundColor = Colors.white,
     required this.medicine,
+    required this.times,
   });
 
   final MedicineModel medicine;
+  final List<TimeOfDay> times;
+
+  formattedTimes(List<TimeOfDay> times, BuildContext context) {
+    String formattedTimes = "";
+    for (int i = 0; i < times.length; i++) {
+      formattedTimes += times[i].format(context);
+      if (i != times.length - 1) {
+        formattedTimes += ", ";
+      }
+    }
+    return formattedTimes;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,20 +82,21 @@ class MedicineTile extends StatelessWidget {
                         color: AppColors.primaryText,
                       ),
                     ),
-                  const Text(
-                    "10:00 AM - 6:30 PM",
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.primaryText,
-                    ),
-                  )
+                  if (times.isNotEmpty)
+                    Text(
+                      formattedTimes(times, context),
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.secondary,
+                      ),
+                    )
                 ],
               ),
             ),
-            IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.close, color: AppColors.secondary))
+            // IconButton(
+            //     onPressed: () {},
+            //     icon: const Icon(Icons.close, color: AppColors.secondary))
           ],
         ),
       ),
