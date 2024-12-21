@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:pill_alert/src/core/app_constants.dart/app_colors.dart';
+import 'package:pill_alert/src/core/services/local_notifications.dart';
 import 'package:pill_alert/src/features/home/presentation/ui/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  LocalNotificationService().init();
   runApp(const MyApp());
 }
 
