@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pill_alert/src/core/app_constants.dart/app_colors.dart';
 import 'package:pill_alert/src/core/app_constants.dart/app_constants.dart';
 import 'package:pill_alert/src/core/models/medicine_model.dart';
+import 'package:pill_alert/src/core/services/local_storage.dart';
 import 'package:pill_alert/src/features/home/presentation/ux/saved_medicines_controller.dart';
 
 class MedicineBottomSheet extends StatelessWidget {
@@ -29,6 +30,7 @@ class MedicineBottomSheet extends StatelessWidget {
             child: Column(
               children: [
                 ListView.separated(
+                  padding: const EdgeInsets.only(bottom: 10),
                   separatorBuilder: (context, index) =>
                       const SizedBox(height: 10),
                   shrinkWrap: true,
@@ -114,7 +116,15 @@ class MedicineBottomSheet extends StatelessWidget {
                   width: double.infinity,
                   height: 60,
                   child: FilledButton(
-                      onPressed: () {}, child: const Text("Submit")),
+                      onPressed: () {
+                        final LocalStorage localStorage = LocalStorage();
+                        localStorage.addMedicineSchedule(
+                            medicine.id,
+                            savedMedicinesController
+                                .getSavedMedicinesTimes(medicine.id));
+                        Navigator.pop(context);
+                      },
+                      child: const Text("Submit")),
                 )
               ],
             ),

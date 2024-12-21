@@ -1,3 +1,4 @@
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pill_alert/src/core/app_constants.dart/app_images.dart';
 
 class MedicineModel {
