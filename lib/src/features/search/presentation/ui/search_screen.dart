@@ -78,7 +78,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       ),
                       Expanded(
                           child: ListView.separated(
-                              padding: const EdgeInsets.only(top: 18),
+                              padding: const EdgeInsets.symmetric(vertical: 18),
                               itemBuilder: (context, index) {
                                 final medicine = searchList[index];
                                 return MedicineTile(
