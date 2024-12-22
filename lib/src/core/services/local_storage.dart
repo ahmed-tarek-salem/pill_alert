@@ -25,9 +25,19 @@ class LocalStorage {
         await Hive.openBox<List<dynamic>?>(HiveBoxesNames.medicines.name);
   }
 
-  Future<void> addMedicineSchedule(int id, List<TimeOfDay>? times) async {
-    if (times == null) return;
-    await storedMedicines.put(id, times);
+  // Future<void> addMedicineSchedule(int id, List<TimeOfDay>? times) async {
+  //   if (times == null) return;
+  //   await storedMedicines.put(id, times);
+  // }
+
+  Future<void> addMedicineTime(int id, TimeOfDay time) async {
+    var retrievedList = storedMedicines.get(id); // Get as dynamic
+    if (retrievedList is List) {
+      retrievedList.add(time);
+      await storedMedicines.put(id, retrievedList);
+    } else if (retrievedList == null) {
+      await storedMedicines.put(id, [time]);
+    }
   }
 
   List<TimeOfDay>? getMedicineTimes(int id) {
@@ -45,10 +55,8 @@ class LocalStorage {
 
   Future<void> deleteMedicineTime(int id, TimeOfDay time) async {
     var retrievedList = storedMedicines.get(id); // Get as dynamic
-    print(retrievedList);
     if (retrievedList is List) {
       retrievedList.remove(time);
-      print(retrievedList);
       await storedMedicines.put(id, retrievedList);
       if (retrievedList.isEmpty) await deleteMedicine(id);
     }

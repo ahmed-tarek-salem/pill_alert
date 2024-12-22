@@ -16,13 +16,23 @@ class SavedMedicinesController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addSavedMedicine(int medicineId, TimeOfDay time) {
+  bool isValidMedicineTime(int medicineId, TimeOfDay time) {
+    final current = medicineTimes[medicineId];
+    if (current == null) {
+      return true;
+    }
+    return !current.contains(time);
+  }
+
+  void addMedicinetime(int medicineId, TimeOfDay time) {
+    if (!isValidMedicineTime(medicineId, time)) return;
     final current = medicineTimes[medicineId];
     if (current == null) {
       medicineTimes[medicineId] = [time];
     } else {
       medicineTimes[medicineId] = [time, ...current];
     }
+    localStorage.addMedicineTime(medicineId, time);
     notifyListeners();
   }
 
@@ -32,6 +42,12 @@ class SavedMedicinesController extends ChangeNotifier {
       medicineTimes.remove(medicineId);
     }
     localStorage.deleteMedicineTime(medicineId, time);
+    notifyListeners();
+  }
+
+  void removeAllMedicineTimes(int medicineId) {
+    medicineTimes.remove(medicineId);
+    localStorage.deleteMedicine(medicineId);
     notifyListeners();
   }
 

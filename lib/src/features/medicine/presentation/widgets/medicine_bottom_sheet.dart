@@ -24,11 +24,23 @@ class MedicineBottomSheet extends StatelessWidget {
             width: double.infinity,
             height: MediaQuery.of(context).size.height * 0.65,
             padding: const EdgeInsets.symmetric(
-              horizontal: AppConstants.horizontalPadding,
-              vertical: 40,
-            ),
+                    horizontal: AppConstants.horizontalPadding)
+                .copyWith(bottom: 40),
             child: Column(
               children: [
+                AppBar(
+                  backgroundColor: Colors.transparent,
+                  automaticallyImplyLeading: false,
+                  actions: [
+                    IconButton(
+                      icon: const Icon(
+                        Icons.close_rounded,
+                        color: AppColors.primary,
+                      ),
+                      onPressed: () => Navigator.pop(context),
+                    )
+                  ],
+                ),
                 ListView.separated(
                   padding: const EdgeInsets.only(bottom: 10),
                   separatorBuilder: (context, index) =>
@@ -46,27 +58,13 @@ class MedicineBottomSheet extends StatelessWidget {
                           child: SizedBox(
                             height: 60,
                             child: OutlinedButton.icon(
-                                icon: const Icon(
-                                  Icons.alarm,
-                                  color: AppColors.primary,
-                                ),
+                                icon: const Icon(Icons.alarm),
                                 style: OutlinedButton.styleFrom(
-                                    side: const BorderSide(
-                                      color: AppColors.primary,
-                                    ),
                                     textStyle: const TextStyle(
-                                      color: AppColors.primary,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w300,
-                                    )),
-                                onPressed: () async {
-                                  final selectedTime = await showTimePicker(
-                                      context: context, initialTime: time);
-                                  if (selectedTime != null) {
-                                    savedMedicinesController.addSavedMedicine(
-                                        medicine.id, selectedTime);
-                                  }
-                                },
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w300,
+                                )),
+                                onPressed: null,
                                 label: Text(time.format(context))),
                           ),
                         ),
@@ -84,47 +82,49 @@ class MedicineBottomSheet extends StatelessWidget {
                     );
                   },
                 ),
-                SizedBox(
-                  width: double.infinity,
-                  height: 60,
-                  child: OutlinedButton.icon(
-                      icon: const Icon(
-                        Icons.add,
-                        color: AppColors.primary,
-                      ),
-                      style: OutlinedButton.styleFrom(
-                          side: const BorderSide(
-                            color: AppColors.primary,
-                          ),
-                          textStyle: const TextStyle(
-                            color: AppColors.primary,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w300,
-                          )),
-                      onPressed: () async {
-                        final time = await showTimePicker(
-                            context: context, initialTime: TimeOfDay.now());
-                        if (time != null) {
-                          savedMedicinesController.addSavedMedicine(
-                              medicine.id, time);
-                        }
-                      },
-                      label: const Text("Set New Alarm")),
-                ),
+                if (savedMedicinesController
+                        .getSavedMedicinesCount(medicine.id) <
+                    3)
+                  SizedBox(
+                    width: double.infinity,
+                    height: 60,
+                    child: OutlinedButton.icon(
+                        icon: const Icon(
+                          Icons.add,
+                          color: AppColors.primary,
+                        ),
+                        style: OutlinedButton.styleFrom(
+                            side: const BorderSide(
+                              color: AppColors.primary,
+                            ),
+                            textStyle: const TextStyle(
+                              color: AppColors.primary,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w300,
+                            )),
+                        onPressed: () async {
+                          final time = await showTimePicker(
+                              context: context,
+                              initialTime: TimeOfDay.now(),
+                              initialEntryMode: TimePickerEntryMode.input);
+                          if (time != null) {
+                            savedMedicinesController.addMedicinetime(
+                                medicine.id, time);
+                          }
+                        },
+                        label: const Text("Set New Alarm")),
+                  ),
                 const Spacer(),
                 SizedBox(
                   width: double.infinity,
                   height: 60,
                   child: FilledButton(
                       onPressed: () {
-                        final LocalStorage localStorage = LocalStorage();
-                        localStorage.addMedicineSchedule(
-                            medicine.id,
-                            savedMedicinesController
-                                .getSavedMedicinesTimes(medicine.id));
+                        savedMedicinesController
+                            .removeAllMedicineTimes(medicine.id);
                         Navigator.pop(context);
                       },
-                      child: const Text("Submit")),
+                      child: const Text("Clear All")),
                 )
               ],
             ),
