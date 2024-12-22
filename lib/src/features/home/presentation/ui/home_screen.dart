@@ -8,6 +8,7 @@ import 'package:pill_alert/src/core/app_constants.dart/app_colors.dart';
 import 'package:pill_alert/src/core/app_constants.dart/app_constants.dart';
 import 'package:pill_alert/src/core/app_constants.dart/app_images.dart';
 import 'package:pill_alert/src/core/models/medicine_model.dart';
+import 'package:pill_alert/src/core/services/alarm_service.dart';
 import 'package:pill_alert/src/core/services/local_storage.dart';
 import 'package:pill_alert/src/core/widgets/medicine_tile.dart';
 import 'package:pill_alert/src/features/home/presentation/ux/saved_medicines_controller.dart';
@@ -23,16 +24,37 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final savedMedicinesController = SavedMedicinesController();
   late final LocalStorage localStorage = LocalStorage();
+  final alarmService = AlarmNotificationService();
 
   @override
   void initState() {
     initStorage();
+    initAlarmListener();
     super.initState();
   }
 
   initStorage() async {
     await localStorage.init();
     savedMedicinesController.fetchSavedMedicines();
+  }
+
+  initAlarmListener() {
+    // Alarm.ringStream.stream.listen((settings) {
+    //   print("Alarm with ID ${settings.id} rang. Rescheduling for tomorrow.");
+    //   showDialog(
+    //       context: context,
+    //       builder: (context) {
+    //         return AlertDialog(
+    //           title: Text(settings.notificationSettings.title),
+    //           content: FilledButton(
+    //               onPressed: () {
+    //                 alarmService.stopAndSetForTomorrow(settings);
+    //                 Navigator.pop(context);
+    //               },
+    //               child: const Text("Stop alarm")),
+    //         );
+    //       });
+    // });
   }
 
   @override

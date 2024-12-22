@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:alarm/alarm.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:pill_alert/src/core/models/medicine_model.dart';
 import 'package:pill_alert/src/core/services/encoding_decoding_id.dart';
 
 class AlarmNotificationService {
@@ -15,45 +16,36 @@ class AlarmNotificationService {
 
   AlarmNotificationService._internal();
 
-  /// Initialize the Alarm Service
   Future<void> init() async {
-    await Alarm.init(); // Initialize the alarm package
-    // Listen for the alarm ring event to reschedule the next day
-    Alarm.ringStream.stream.listen((settings) async {
-      print("Alarm with ID ${settings.id} rang. Rescheduling for tomorrow.");
-      final tomorrow = settings.dateTime.add(const Duration(days: 1));
-      await scheduleAlarm(
-          tomorrow,
-          settings.id,
-          settings.notificationSettings.title,
-          settings.notificationSettings.body);
-    });
+    await Alarm.init();
     checkAndroidScheduleExactAlarmPermission();
   }
 
   /// Schedule an Alarm
   Future<void> scheduleAlarm(
       DateTime scheduledTime, int alarmId, String title, String body) async {
-    final now = DateTime.now();
-    if (scheduledTime.isBefore(now)) {
-      print("Scheduled time is in the past. Alarm will not be scheduled.");
-      return;
-    }
-
-    // Create and set the alarm
     final alarmSettings = AlarmSettings(
       id: alarmId,
       dateTime: scheduledTime,
-      assetAudioPath: 'assets/audios/marimba.mp3', // Add your alarm sound here
+      assetAudioPath: 'assets/audios/marimba.mp3',
       loopAudio: true,
       vibrate: true,
-      fadeDuration: 5.0, // Optional fade duration in seconds
-      notificationSettings:
-          NotificationSettings(body: body, title: title, stopButton: "Stop"),
+      notificationSettings: NotificationSettings(body: body, title: title),
+      androidFullScreenIntent: true,
     );
 
     await Alarm.set(alarmSettings: alarmSettings);
     print("Alarm set for $scheduledTime");
+  }
+
+  Future<void> stopAndSetForTomorrow(AlarmSettings settings) async {
+    await Alarm.stop(settings.id);
+    print("Alarm with ID ${settings.id} stopped.");
+    await Alarm.set(
+        alarmSettings: settings.copyWith(
+      dateTime: settings.dateTime.add(const Duration(days: 1)),
+    ));
+    print("Alarm with ID ${settings.id} rescheduled for tomorrow.");
   }
 
   /// Cancel an Alarm
@@ -76,7 +68,7 @@ class AlarmNotificationService {
   }
 
   /// Schedule a Daily Alarm
-  Future<void> scheduleDailyAlarm(TimeOfDay scheduledTimeOfDay, int alarmId,
+  Future<void> handleSetAlarm(TimeOfDay scheduledTimeOfDay, int alarmId,
       String title, String body) async {
     final now = DateTime.now();
     var scheduledTime = DateTime(

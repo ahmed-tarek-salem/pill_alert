@@ -37,7 +37,7 @@ class SavedMedicinesController extends ChangeNotifier {
       medicineTimes[medicineId] = [time, ...current];
     }
     localStorage.addMedicineTime(medicineId, time);
-    alarmService.scheduleDailyAlarm(
+    alarmService.handleSetAlarm(
       time,
       EncodingAndDecodingId.encodeNotificationId(time, medicineId),
       medicineName,

@@ -1,4 +1,3 @@
-import 'package:alarm/alarm.dart';
 import 'package:flutter/material.dart';
 import 'package:pill_alert/src/core/app_constants.dart/app_colors.dart';
 import 'package:pill_alert/src/core/services/alarm_service.dart';
