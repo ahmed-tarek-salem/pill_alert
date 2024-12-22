@@ -19,6 +19,33 @@ class AlarmNotificationService {
   Future<void> init() async {
     await Alarm.init();
     checkAndroidScheduleExactAlarmPermission();
+    checkNotificationPermission();
+  }
+
+  Future<void> checkNotificationPermission() async {
+    // Check current notification permission status
+    final status = await Permission.notification.status;
+
+    if (status.isGranted) {
+      debugPrint("Notification permission already granted.");
+    } else if (status.isDenied) {
+      // Request permission
+      final result = await Permission.notification.request();
+
+      if (result.isGranted) {
+        debugPrint("Notification permission granted.");
+      } else if (result.isPermanentlyDenied) {
+        debugPrint(
+            "Notification permission permanently denied. Show app settings.");
+        openAppSettings();
+      } else {
+        debugPrint("Notification permission denied.");
+      }
+    } else if (status.isPermanentlyDenied) {
+      debugPrint(
+          "Notification permission permanently denied. Show app settings.");
+      openAppSettings();
+    }
   }
 
   /// Schedule an Alarm
