@@ -1,3 +1,8 @@
+import 'dart:io';
+
+import 'package:alarm/alarm.dart';
+import 'package:alarm/model/alarm_settings.dart';
+import 'package:alarm/model/notification_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:pill_alert/src/core/app_constants.dart/app_colors.dart';
 import 'package:pill_alert/src/core/app_constants.dart/app_constants.dart';
@@ -33,6 +38,34 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(onPressed: () async {
+        int delayInHours = 0;
+        var dateTime = DateTime.now().add(Duration(hours: delayInHours));
+        double? volume;
+
+        if (delayInHours != 0) {
+          dateTime = dateTime.copyWith(second: 0, millisecond: 0);
+          volume = 0.5;
+        }
+
+        final alarmSettings = AlarmSettings(
+          id: DateTime.now().millisecondsSinceEpoch % 10000,
+          dateTime: dateTime,
+          assetAudioPath: 'assets/audios/marimba.mp3',
+          volume: volume,
+          vibrate: false,
+          volumeEnforced: true,
+          notificationSettings: NotificationSettings(
+            title: 'Alarm example',
+            body: 'Shortcut button alarm with delay of $delayInHours hours',
+            icon: 'notification_icon',
+            stopButton: "Stop",
+          ),
+          warningNotificationOnKill: Platform.isIOS,
+        );
+
+        await Alarm.set(alarmSettings: alarmSettings);
+      }),
       body: Stack(
         children: [
           Image.asset(AppImages.homeBackground,

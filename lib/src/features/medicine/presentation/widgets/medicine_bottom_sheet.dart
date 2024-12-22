@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:pill_alert/src/core/app_constants.dart/app_colors.dart';
 import 'package:pill_alert/src/core/app_constants.dart/app_constants.dart';
 import 'package:pill_alert/src/core/models/medicine_model.dart';
-import 'package:pill_alert/src/core/services/local_storage.dart';
 import 'package:pill_alert/src/features/home/presentation/ux/saved_medicines_controller.dart';
 
 class MedicineBottomSheet extends StatelessWidget {
@@ -109,7 +108,7 @@ class MedicineBottomSheet extends StatelessWidget {
                               initialEntryMode: TimePickerEntryMode.input);
                           if (time != null) {
                             savedMedicinesController.addMedicinetime(
-                                medicine.id, time);
+                                medicine.id, medicine.name, time);
                           }
                         },
                         label: const Text("Set New Alarm")),

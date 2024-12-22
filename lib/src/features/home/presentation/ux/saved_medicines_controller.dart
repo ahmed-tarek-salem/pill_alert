@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:pill_alert/src/core/services/alarm_service.dart';
+import 'package:pill_alert/src/core/services/encoding_decoding_id.dart';
+import 'package:pill_alert/src/core/services/local_notifications.dart';
 import 'package:pill_alert/src/core/services/local_storage.dart';
 
 class SavedMedicinesController extends ChangeNotifier {
   ///Medicine id to list of alerting times
   Map<int, List<TimeOfDay>?> medicineTimes = {};
-  final LocalStorage localStorage = LocalStorage();
+  final localStorage = LocalStorage();
+  final alarmService = AlarmNotificationService();
 
   fetchSavedMedicines() {
     localStorage.storedMedicines.keys.forEach((key) {
@@ -24,7 +28,7 @@ class SavedMedicinesController extends ChangeNotifier {
     return !current.contains(time);
   }
 
-  void addMedicinetime(int medicineId, TimeOfDay time) {
+  void addMedicinetime(int medicineId, String medicineName, TimeOfDay time) {
     if (!isValidMedicineTime(medicineId, time)) return;
     final current = medicineTimes[medicineId];
     if (current == null) {
@@ -33,6 +37,12 @@ class SavedMedicinesController extends ChangeNotifier {
       medicineTimes[medicineId] = [time, ...current];
     }
     localStorage.addMedicineTime(medicineId, time);
+    alarmService.scheduleDailyAlarm(
+      time,
+      EncodingAndDecodingId.encodeNotificationId(time, medicineId),
+      medicineName,
+      'Time to take pill',
+    );
     notifyListeners();
   }
 
@@ -42,10 +52,14 @@ class SavedMedicinesController extends ChangeNotifier {
       medicineTimes.remove(medicineId);
     }
     localStorage.deleteMedicineTime(medicineId, time);
+    alarmService.cancelAlarm(
+        EncodingAndDecodingId.encodeNotificationId(time, medicineId));
+
     notifyListeners();
   }
 
   void removeAllMedicineTimes(int medicineId) {
+    alarmService.cancelAllAlarms(medicineId, medicineTimes[medicineId] ?? []);
     medicineTimes.remove(medicineId);
     localStorage.deleteMedicine(medicineId);
     notifyListeners();
