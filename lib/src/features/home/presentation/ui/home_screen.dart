@@ -39,55 +39,56 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   initAlarmListener() {
-    // Alarm.ringStream.stream.listen((settings) {
-    //   print("Alarm with ID ${settings.id} rang. Rescheduling for tomorrow.");
-    //   showDialog(
-    //       context: context,
-    //       builder: (context) {
-    //         return AlertDialog(
-    //           title: Text(settings.notificationSettings.title),
-    //           content: FilledButton(
-    //               onPressed: () {
-    //                 alarmService.stopAndSetForTomorrow(settings);
-    //                 Navigator.pop(context);
-    //               },
-    //               child: const Text("Stop alarm")),
-    //         );
-    //       });
-    // });
+    Alarm.ringStream.stream.listen((settings) {
+      print("Alarm with ID ${settings.id} rang. Rescheduling for tomorrow.");
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) {
+            return AlertDialog(
+              title: Text(settings.notificationSettings.title),
+              content: FilledButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    alarmService.stopAndSetForTomorrow(settings);
+                  },
+                  child: const Text("Stop alarm")),
+            );
+          });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(onPressed: () async {
-        int delayInHours = 0;
-        var dateTime = DateTime.now().add(Duration(hours: delayInHours));
-        double? volume;
+      // floatingActionButton: FloatingActionButton(onPressed: () async {
+      //   int delayInHours = 0;
+      //   var dateTime = DateTime.now().add(Duration(hours: delayInHours));
+      //   double? volume;
 
-        if (delayInHours != 0) {
-          dateTime = dateTime.copyWith(second: 0, millisecond: 0);
-          volume = 0.5;
-        }
+      //   if (delayInHours != 0) {
+      //     dateTime = dateTime.copyWith(second: 0, millisecond: 0);
+      //     volume = 0.5;
+      //   }
 
-        final alarmSettings = AlarmSettings(
-          id: DateTime.now().millisecondsSinceEpoch % 10000,
-          dateTime: dateTime,
-          assetAudioPath: 'assets/audios/marimba.mp3',
-          volume: volume,
-          vibrate: false,
-          volumeEnforced: true,
-          notificationSettings: NotificationSettings(
-            title: 'Alarm example',
-            body: 'Shortcut button alarm with delay of $delayInHours hours',
-            icon: 'notification_icon',
-            stopButton: "Stop",
-          ),
-          warningNotificationOnKill: Platform.isIOS,
-        );
+      //   final alarmSettings = AlarmSettings(
+      //     id: DateTime.now().millisecondsSinceEpoch % 10000,
+      //     dateTime: dateTime,
+      //     assetAudioPath: 'assets/audios/marimba.mp3',
+      //     volume: volume,
+      //     vibrate: false,
+      //     volumeEnforced: true,
+      //     notificationSettings: NotificationSettings(
+      //       title: 'Alarm example',
+      //       body: 'Shortcut button alarm with delay of $delayInHours hours',
+      //       icon: 'notification_icon',
+      //       stopButton: "Stop",
+      //     ),
+      //     warningNotificationOnKill: Platform.isIOS,
+      //   );
 
-        await Alarm.set(alarmSettings: alarmSettings);
-      }),
+      //   await Alarm.set(alarmSettings: alarmSettings);
+      // }),
       body: Stack(
         children: [
           Image.asset(AppImages.homeBackground,
