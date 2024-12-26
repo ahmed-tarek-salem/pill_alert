@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:alarm/alarm.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:pill_alert/src/core/models/medicine_model.dart';
 import 'package:pill_alert/src/core/services/encoding_decoding_id.dart';
 
 class AlarmNotificationService {
