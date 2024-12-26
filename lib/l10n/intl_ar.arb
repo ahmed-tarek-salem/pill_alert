@@ -1,0 +1,13 @@
+{
+    "your_medicines": "أدويتك",
+    "stop_alarm": "إيقاف المنبه",
+    "language": "English",
+    "no_selected_medicines": "لا توجد أدوية محددة",
+    "similars": "بدائل الدواء:",
+    "dose": "الجرعة:",
+    "side_effects": "الأعراض الجانبية:",
+    "tips": "نصائح:",
+    "add_your_times": "أضف أوقاتك",
+    "set_new_alarm": "ضبط منبه جديد",
+    "clear_all": "مسح الكل"
+}

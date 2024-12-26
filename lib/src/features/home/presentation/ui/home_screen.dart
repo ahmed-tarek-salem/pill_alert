@@ -1,9 +1,7 @@
-import 'dart:io';
-
 import 'package:alarm/alarm.dart';
-import 'package:alarm/model/alarm_settings.dart';
-import 'package:alarm/model/notification_settings.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:pill_alert/generated/l10n.dart';
 import 'package:pill_alert/src/core/app_constants.dart/app_colors.dart';
 import 'package:pill_alert/src/core/app_constants.dart/app_constants.dart';
 import 'package:pill_alert/src/core/app_constants.dart/app_images.dart';
@@ -13,6 +11,8 @@ import 'package:pill_alert/src/core/services/local_storage.dart';
 import 'package:pill_alert/src/core/widgets/medicine_tile.dart';
 import 'package:pill_alert/src/features/home/presentation/ux/saved_medicines_controller.dart';
 import 'package:pill_alert/src/features/search/presentation/ui/search_screen.dart';
+
+import '../../../../../main.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Navigator.pop(context);
                     alarmService.stopAndSetForTomorrow(settings);
                   },
-                  child: const Text("Stop alarm")),
+                  child: Text(S.of(context).stop_alarm)),
             );
           });
     });
@@ -106,8 +106,17 @@ class _HomeScreenState extends State<HomeScreen> {
                     TextButton(
                         style:
                             TextButton.styleFrom(foregroundColor: Colors.white),
-                        onPressed: () {},
-                        child: const Text("اللغة العربية")),
+                        onPressed: () {
+                          if (Intl.getCurrentLocale() == "en") {
+                            S.load(const Locale('ar'));
+                            MyApp.of(context)!.setLocale(const Locale('ar'));
+                          } else {
+                            S.load(const Locale('en'));
+                          }
+                          print(
+                              "Language changed to ${Intl.getCurrentLocale()}");
+                        },
+                        child: Text(S.of(context).language)),
                     const Spacer(),
                     Image.asset(AppImages.logo, height: 150)
                   ],
@@ -125,9 +134,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Column(
                               children: [
                                 const SizedBox(height: 16),
-                                const Text(
-                                  "Your Medicines",
-                                  style: TextStyle(
+                                Text(
+                                  S.of(context).your_medicines,
+                                  style: const TextStyle(
                                     fontSize: 22,
                                     fontWeight: FontWeight.w700,
                                     color: AppColors.primary,
@@ -136,9 +145,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Expanded(
                                   child: savedMedicinesController
                                           .medicineTimes.isEmpty
-                                      ? const Center(
-                                          child: Text("No Selected Medicines",
-                                              style: TextStyle(
+                                      ? Center(
+                                          child: Text(
+                                              S
+                                                  .of(context)
+                                                  .no_selected_medicines,
+                                              style: const TextStyle(
                                                 fontSize: 22,
                                                 fontWeight: FontWeight.w300,
                                                 color: AppColors.primary,
