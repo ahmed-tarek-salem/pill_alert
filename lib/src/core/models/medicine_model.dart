@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:pill_alert/src/core/app_constants.dart/app_images.dart';
 
 class MedicineModel {
@@ -44,7 +45,13 @@ class MedicineModel {
   }
 }
 
-final List<MedicineModel> medicines = [
+getLocalizedMedicines(BuildContext context) {
+  return Localizations.localeOf(context).languageCode == 'ar'
+      ? _medicinesArabic
+      : _medicinesEnglish;
+}
+
+final List<MedicineModel> _medicinesEnglish = [
   MedicineModel(
     id: 1,
     name: "Atacand 16mg",
@@ -175,7 +182,7 @@ final List<MedicineModel> medicines = [
   ),
 ];
 
-final List<MedicineModel> medicinesArabic = [
+final List<MedicineModel> _medicinesArabic = [
   MedicineModel(
     id: 1,
     name: "أتاكاند ١٦مجم",

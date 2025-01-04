@@ -5,6 +5,8 @@ import 'package:pill_alert/src/core/models/medicine_model.dart';
 import 'package:pill_alert/src/core/widgets/medicine_tile.dart';
 import 'package:pill_alert/src/features/home/presentation/ui/home_screen.dart';
 
+import '../../../../../generated/l10n.dart';
+
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
 
@@ -14,12 +16,12 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   final searchController = TextEditingController();
-  List<MedicineModel> searchList = medicines;
+  late final List<MedicineModel> searchList;
 
   @override
   void initState() {
     searchController.addListener(() {
-      searchList = medicines
+      searchList = getLocalizedMedicines(context)
           .where((medicine) =>
               medicine.name
                   .toLowerCase()
@@ -32,6 +34,12 @@ class _SearchScreenState extends State<SearchScreen> {
       setState(() {});
     });
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    searchList = getLocalizedMedicines(context);
+    super.didChangeDependencies();
   }
 
   @override
@@ -57,19 +65,19 @@ class _SearchScreenState extends State<SearchScreen> {
                     children: [
                       TextField(
                         controller: searchController,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                             filled: true,
                             fillColor: Colors.white,
                             border: InputBorder.none,
-                            prefixIcon: Icon(Icons.search),
-                            hintText: "Search",
-                            focusedBorder: OutlineInputBorder(
+                            prefixIcon: const Icon(Icons.search),
+                            hintText: S.of(context).search,
+                            focusedBorder: const OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(30)),
                               borderSide:
                                   BorderSide(color: Colors.white, width: 2),
                             ),
-                            enabledBorder: OutlineInputBorder(
+                            enabledBorder: const OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(30)),
                               borderSide:

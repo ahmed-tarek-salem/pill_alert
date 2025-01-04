@@ -22,7 +22,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Locale _locale = const Locale('en');
+  Locale _locale = const Locale('ar');
 
   void setLocale(Locale value) {
     setState(() {
@@ -35,6 +35,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Pill Alert',
       locale: _locale,
+      debugShowCheckedModeBanner: false,
       localizationsDelegates: const [
         S.delegate,
         GlobalMaterialLocalizations.delegate,

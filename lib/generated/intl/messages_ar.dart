@@ -28,6 +28,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "language": MessageLookupByLibrary.simpleMessage("English"),
         "no_selected_medicines":
             MessageLookupByLibrary.simpleMessage("لا توجد أدوية محددة"),
+        "search": MessageLookupByLibrary.simpleMessage("بحث"),
         "set_new_alarm": MessageLookupByLibrary.simpleMessage("ضبط منبه جديد"),
         "side_effects":
             MessageLookupByLibrary.simpleMessage("الأعراض الجانبية:"),

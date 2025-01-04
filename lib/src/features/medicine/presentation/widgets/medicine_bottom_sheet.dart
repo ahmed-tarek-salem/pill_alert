@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pill_alert/generated/l10n.dart';
 import 'package:pill_alert/src/core/app_constants.dart/app_colors.dart';
 import 'package:pill_alert/src/core/app_constants.dart/app_constants.dart';
 import 'package:pill_alert/src/core/models/medicine_model.dart';
@@ -111,7 +112,7 @@ class MedicineBottomSheet extends StatelessWidget {
                                 medicine.id, medicine.name, time);
                           }
                         },
-                        label: const Text("Set New Alarm")),
+                        label: Text(S.of(context).set_new_alarm)),
                   ),
                 const Spacer(),
                 SizedBox(
@@ -123,7 +124,7 @@ class MedicineBottomSheet extends StatelessWidget {
                             .removeAllMedicineTimes(medicine.id);
                         Navigator.pop(context);
                       },
-                      child: const Text("Clear All")),
+                      child: Text(S.of(context).clear_all)),
                 )
               ],
             ),

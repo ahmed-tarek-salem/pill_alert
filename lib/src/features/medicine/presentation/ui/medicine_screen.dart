@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pill_alert/generated/l10n.dart';
 import 'package:pill_alert/src/core/app_constants.dart/app_colors.dart';
 import 'package:pill_alert/src/core/app_constants.dart/app_constants.dart';
 import 'package:pill_alert/src/core/models/medicine_model.dart';
@@ -47,22 +48,22 @@ class MedicineScreen extends StatelessWidget {
               children: [
                 const SizedBox(height: 20),
                 LabelInfoTile(
-                  label: "Similars of the drug:",
+                  label: S.of(context).similars,
                   info: medicine.similars.join(", "),
                 ),
                 const SizedBox(height: 10),
                 LabelInfoTile(
-                  label: "Dose:",
+                  label: S.of(context).dose,
                   info: medicine.dose,
                 ),
                 const SizedBox(height: 10),
                 LabelInfoTile(
-                  label: "Side effects:",
+                  label: S.of(context).side_effects,
                   info: medicine.sideEffects,
                 ),
                 const SizedBox(height: 10),
                 LabelInfoTile(
-                  label: "Tips:",
+                  label: S.of(context).tips,
                   info: medicine.tips,
                 ),
               ],
@@ -91,7 +92,7 @@ class MedicineScreen extends StatelessWidget {
                             medicine: medicine);
                       });
                 },
-                label: const Text("Add your times"),
+                label: Text(S.of(context).add_your_times),
                 icon: const Icon(Icons.alarm, color: AppColors.secondary),
               ),
             ),

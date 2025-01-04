@@ -60,6 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final medicines = getLocalizedMedicines(context);
     return Scaffold(
       // floatingActionButton: FloatingActionButton(onPressed: () async {
       //   int delayInHours = 0;
@@ -112,6 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             MyApp.of(context)!.setLocale(const Locale('ar'));
                           } else {
                             S.load(const Locale('en'));
+                            MyApp.of(context)!.setLocale(const Locale('en'));
                           }
                           print(
                               "Language changed to ${Intl.getCurrentLocale()}");
