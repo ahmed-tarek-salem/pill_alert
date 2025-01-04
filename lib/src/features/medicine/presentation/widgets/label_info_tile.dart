@@ -3,7 +3,7 @@ import 'package:pill_alert/src/core/app_constants.dart/app_colors.dart';
 
 class LabelInfoTile extends StatelessWidget {
   final String label;
-  final String info;
+  final String? info;
   const LabelInfoTile({
     required this.label,
     required this.info,
@@ -31,14 +31,15 @@ class LabelInfoTile extends StatelessWidget {
             ),
           ],
         ),
-        Padding(
-          padding: const EdgeInsetsDirectional.only(start: 16),
-          child: Text(info,
-              style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w300,
-                  color: AppColors.primary)),
-        ),
+        if (info != null)
+          Padding(
+            padding: const EdgeInsetsDirectional.only(start: 16),
+            child: Text(info!,
+                style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w300,
+                    color: AppColors.primary)),
+          ),
       ],
     );
   }

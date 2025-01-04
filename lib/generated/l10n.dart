@@ -130,6 +130,16 @@ class S {
     );
   }
 
+  /// `Educational Video`
+  String get educational_video {
+    return Intl.message(
+      'Educational Video',
+      name: 'educational_video',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Add your times`
   String get add_your_times {
     return Intl.message(

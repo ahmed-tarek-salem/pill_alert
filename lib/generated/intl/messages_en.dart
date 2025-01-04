@@ -26,6 +26,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Add your times"),
         "clear_all": MessageLookupByLibrary.simpleMessage("Clear All"),
         "dose": MessageLookupByLibrary.simpleMessage("Dose:"),
+        "educational_video":
+            MessageLookupByLibrary.simpleMessage("Educational Video"),
         "language": MessageLookupByLibrary.simpleMessage("اللغة العربية"),
         "no_selected_medicines":
             MessageLookupByLibrary.simpleMessage("No Selected Medicines"),

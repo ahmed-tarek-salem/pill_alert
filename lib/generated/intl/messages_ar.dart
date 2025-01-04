@@ -25,6 +25,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "add_your_times": MessageLookupByLibrary.simpleMessage("أضف أوقاتك"),
         "clear_all": MessageLookupByLibrary.simpleMessage("مسح الكل"),
         "dose": MessageLookupByLibrary.simpleMessage("الجرعة:"),
+        "educational_video":
+            MessageLookupByLibrary.simpleMessage("فيديو توضيحي"),
         "language": MessageLookupByLibrary.simpleMessage("English"),
         "no_selected_medicines":
             MessageLookupByLibrary.simpleMessage("لا توجد أدوية محددة"),

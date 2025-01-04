@@ -9,6 +9,7 @@ class MedicineModel {
   final String dose;
   final String sideEffects;
   final String tips;
+  final String? videoUrl;
 
   MedicineModel({
     required this.id,
@@ -18,6 +19,7 @@ class MedicineModel {
     required this.dose,
     required this.sideEffects,
     required this.tips,
+    this.videoUrl,
   });
 
   factory MedicineModel.fromJson(Map<String, dynamic> json) {
@@ -29,6 +31,7 @@ class MedicineModel {
       dose: json['dose'],
       sideEffects: json['side_effects'],
       tips: json['tips'],
+      videoUrl: json['video_url'],
     );
   }
 
@@ -41,6 +44,7 @@ class MedicineModel {
       'dose': dose,
       'side_effects': sideEffects,
       'tips': tips,
+      'video_url': videoUrl,
     };
   }
 }
@@ -150,6 +154,7 @@ final List<MedicineModel> _medicinesEnglish = [
         "1. Inject under the skin, using a syringe or insulin pen, once per day at the same time of day.\n"
         "2. Do not inject into the same place two times in a row.\n"
         "3. Avoid injecting into skin that is damaged.",
+    videoUrl: "1uosYZ6LDvQ",
   ),
   MedicineModel(
     id: 9,
@@ -164,6 +169,7 @@ final List<MedicineModel> _medicinesEnglish = [
         "3. Prepare a syringe or injection pen.\n"
         "4. Inject into the fat layer under the skin.\n"
         "5. Dispose of needles safely.",
+    videoUrl: "ei9zspwn3Mk",
   ),
   MedicineModel(
     id: 10,
@@ -267,6 +273,7 @@ final List<MedicineModel> _medicinesArabic = [
     sideEffects: "الحساسية ,انخفاض سكر الدم ،نقص البوتاسيوم بالدم.",
     tips:
         "قم بالحقن تحت الجلد باستخدام حقنة أو قلم الأنسولين مرة واحدة يوميًا في نفس الوقت من اليوم. لا تحقن في نفس المكان مرتين متتاليتين. تجنب الحقن في الجلد المصاب.\nالطريقة الصحيحة لاستخدام قلم الأنسولين",
+    videoUrl: "1uosYZ6LDvQ",
   ),
   MedicineModel(
     id: 9,
@@ -279,6 +286,7 @@ final List<MedicineModel> _medicinesArabic = [
         "None specified in the document.", // or leave empty as in the original
     tips:
         "اختيار أقصر طول للإبرة.\nغسل اليدين وتنظيف مكان الحقن.\n تحضير الحقنة أو قلم الحقن.\n الحقن في طبقة الدهون تحت الجلد.\nالتخلص من الإبر بشكل آمن.",
+    videoUrl: "ei9zspwn3Mk",
   ),
   MedicineModel(
     id: 10,
