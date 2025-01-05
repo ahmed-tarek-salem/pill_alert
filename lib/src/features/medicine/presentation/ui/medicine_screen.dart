@@ -22,10 +22,12 @@ class _MedicineScreenState extends State<MedicineScreen> {
 
   @override
   void didChangeDependencies() {
-    _controller = YoutubePlayerController(
-        initialVideoId: widget.medicine.videoUrl!,
-        flags: const YoutubePlayerFlags(autoPlay: false));
-    setState(() {});
+    if (widget.medicine.videoUrl != null) {
+      _controller = YoutubePlayerController(
+          initialVideoId: widget.medicine.videoUrl!,
+          flags: const YoutubePlayerFlags(autoPlay: false));
+      setState(() {});
+    }
     super.didChangeDependencies();
   }
 

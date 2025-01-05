@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:pill_alert/generated/l10n.dart';
 import 'package:pill_alert/src/core/app_constants.dart/app_colors.dart';
@@ -8,6 +9,10 @@ import 'package:pill_alert/src/features/home/presentation/ui/home_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   AlarmNotificationService().init();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   runApp(const MyApp());
 }
 
